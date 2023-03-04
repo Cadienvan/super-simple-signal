@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signals Demo</title>
+  </head>
+  <body>
+    <div id="s1"></div>
+    <div id="c1"></div>
+    <script src="../dist/index.js"></script>
+    <script>
+      const s1 = document.getElementById("s1");
+
+      const signal = new Signal(s1);
+      const computed = new Computed(signal, (value, oldValue) => {
+        return value.replace(".", ",");
+      });
+
+      computed.attachTo(document.getElementById("c1"));
+
+      signal.subscribe(value => {
+        console.log("signal", value);
+      });
+
+      computed.subscribe(value => {
+        console.log("computed", value);
+      });
+
+      setInterval(() => {
+        signal.value = Math.random().toString();
+      }, 1000);
+    </script>
+  </body>
+</html>

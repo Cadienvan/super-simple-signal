@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signals Demo</title>
+  </head>
+  <body>
+    <div id="s1"></div>
+    <script src="../dist/index.js"></script>
+    <script>
+      const s1 = document.getElementById("s1");
+
+      const signal = new Signal(s1);
+
+      signal.subscribe(value => {
+        console.log(value);
+      });
+
+      signal.value = "I am Signal!";
+      signal.value = "I am Signal again!";
+    </script>
+  </body>
+</html>

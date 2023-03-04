@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signals Demo</title>
+  </head>
+  <body>
+    <script src="../dist/index.js"></script>
+    <script>
+      const signal = new Signal(0);
+
+      signal.subscribe(value => {
+        console.log(value);
+      });
+
+      window.addEventListener("load", () => {
+        const s1 = document.getElementById("s1");
+        signal.attachTo(s1);
+      });
+    </script>
+    <div id="s1"></div>
+    <button onclick="signal.value++">Click me</button>
+  </body>
+</html>

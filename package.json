@@ -1,0 +1,36 @@
+{
+  "name": "super-simple-signal",
+  "version": "1.0.0",
+  "description": "A simple signal implementation in TypeScript for the browser and Node.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start": "tsc -w",
+    "build": "rm -rf ./dist/* && tsc && rollup ./dist/tmp/index.js --file ./dist/index.js --format iife --name SuperSimpleSignal --sourcemap && rm -rf ./dist/tmp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "signal",
+    "typescript",
+    "browser",
+    "node",
+    "event",
+    "event emitter",
+    "event dispatcher",
+    "event bus",
+    "event system",
+    "event manager",
+    "event handler",
+    "event listener",
+    "event binding"
+  ],
+  "author": "Michael Di Prisco <cadienvan@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "rollup": "^3.18.0",
+    "typescript": "^4.9.5"
+  }
+}

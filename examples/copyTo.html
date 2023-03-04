@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signals Demo</title>
+  </head>
+  <body>
+    <div id="s1"></div>
+    <div id="s2"></div>
+    <script src="../dist/index.js"></script>
+    <script>
+      const s1 = document.getElementById("s1");
+      const s2 = document.getElementById("s2");
+
+      const signal = new Signal(s1);
+
+      signal.value = "I am Signal1";
+
+      signal.copyTo(s2);
+      signal.value = "I am Signal2 but also Signal1, kept in sync. In 5 secs I'll start to update randomly.";
+
+      setTimeout(() => {
+        setInterval(() => {
+          signal.value = Math.random();
+        }, 1000);
+      }, 5000);
+    </script>
+  </body>
+</html>
