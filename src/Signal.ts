@@ -1,3 +1,9 @@
+export type SignalOptions = {
+  property: string;
+  bind: boolean;
+  bindEvents: string[];
+}
+
 declare class Signal<T = any> {
   /** @internal */
   _value: unknown;
@@ -14,16 +20,22 @@ declare class Signal<T = any> {
   _node?: Node;
 
   /** @internal */
-  _property: string;
+  _opts: SignalOptions;
 
   /** @internal */
   _listeners: Set<(...args: unknown[]) => void>;
 
-  constructor(node?: Node | undefined, value?: T, property?: string);
-  constructor(value?: T, node?: Node | undefined, property?: string);
+  constructor(node?: Node | undefined, value?: T, opts?: SignalOptions);
+  constructor(value?: T, node?: Node | undefined, opts?: SignalOptions);
 
   /** @internal */
   _refresh(): boolean;
+
+  /** @internal */
+  _setRaw(value: T): void;
+
+  /** @internal */
+  _attachNodeEvents(): void;
 
   subscribe(fn: (value: T) => void): () => void;
 
@@ -31,7 +43,7 @@ declare class Signal<T = any> {
 
   attachTo(node: Node, property?: string): void;
 
-  copyTo(node: Node, property?: string, keepInSync?: boolean): Signal<T>;
+  copyTo(node: Node, opts?: SignalOptions, keepInSync?: boolean): Signal<T>;
 
   detachFrom(node: Node): void;
 
@@ -41,9 +53,13 @@ declare class Signal<T = any> {
   set value(value: T);
 }
 
-function Signal(this: Signal, node: Node | undefined = undefined, value: unknown = undefined, property: string = "innerHTML") {
+function Signal(this: Signal, node: Node | undefined = undefined, value: unknown = undefined, opts: SignalOptions = {
+  property: "innerHTML",
+  bind: false,
+  bindEvents: [],
+}) {
   if (!(this instanceof Signal)) {
-    return new Signal(node, value, property);
+    return new Signal(node, value, opts);
   }
 
   if (typeof node !== "object") {
@@ -56,17 +72,14 @@ function Signal(this: Signal, node: Node | undefined = undefined, value: unknown
   this._oldValue = undefined;
   this._version = 0;
   this._node = node;
-  this._property = property;
+  this._opts = opts;
   this._listeners = new Set();
 
   if (node && value) {
-    node[property] = value;
+    node[opts.property] = value;
   } else if (node && !value) {
-    this._value = node[property];
+    this._value = node[opts.property];
   }
-  // else if (!node && !value) {
-  //   throw new Error("Signal must be initialized with a value or a node");
-  // }
 }
 
 Signal.prototype = {
@@ -74,15 +87,34 @@ Signal.prototype = {
   _oldValue: undefined,
   _version: 0,
   _node: undefined,
-  _property: "innerHTML",
+  _opts: {
+    property: "innerHTML",
+    bind: false,
+    bindEvents: [],
+  },
   _listeners: new Set(),
 
   _refresh() {
     if (this._node) {
-      this._node[this._property] = this._value;
+      this._node[this._opts.property] = this._value;
       return true;
     }
     return false;
+  },
+
+  _setRaw(value: unknown) {
+    this._oldValue = this._value;
+    this._value = value;
+    this._version += 1;
+    this._listeners.forEach(listener => listener(value, this._oldValue));
+  },
+
+  _attachNodeEvents() {
+    this._node?.addEventListener("destroy", () => (this._node = undefined));
+    this._node?.addEventListener("remove", () => (this._node = undefined));
+    this._node?.addEventListener("change", () => {
+      this._setRaw(this._node?.[this._opts.property]);
+    });
   },
 
   subscribe(fn: (value: unknown) => void) {
@@ -95,14 +127,13 @@ Signal.prototype = {
   },
 
   attachTo(node: Node, property: string) {
-    property = property || this._property;
+    property = property || this._opts.property;
     this._node = node;
     node[property] = this._value;
   },
 
-  copyTo(node: Node, property: string, keepInSync: boolean = false) {
-    property = property || this._property;
-    const signal = new Signal(node, this._value, property);
+  copyTo(node: Node, opts: SignalOptions, keepInSync: boolean = false) {
+    const signal = new Signal(node, this._value, opts);
     // To prevent circular updates, we only subscribe to the signal if keepInSync is true and don't subscribe back.
     if (keepInSync) this.subscribe(value => (signal.value = value));
     return signal;

@@ -8,19 +8,27 @@
   </head>
   <body>
     <div id="s1"></div>
+    <div id="s2"></div>
     <div id="c1"></div>
     <script src="../dist/index.js"></script>
     <script>
       const s1 = document.getElementById("s1");
+      const s2 = document.getElementById("s2");
 
-      const signal = new Signal(s1);
-      const computed = new Computed(signal, (value, oldValue) => {
-        return value.replace(".", ",");
-      });
+      const signal1 = new Signal(s1);
+      const signal2 = new Signal(s2);
+      const computed = new Computed(
+        [signal1, signal2],
+        (value, oldValue, computedOldValue) => {
+          console.log(value);
+          return value.join(" - ").replace(".", ",");
+        },
+        document.getElementById("c1")
+      );
 
-      computed.attachTo(document.getElementById("c1"));
+      // computed.attachTo(document.getElementById("c1"));
 
-      signal.subscribe(value => {
+      signal1.subscribe(value => {
         console.log("signal", value);
       });
 
@@ -29,8 +37,14 @@
       });
 
       setInterval(() => {
-        signal.value = Math.random().toString();
+        signal1.value = Math.random().toString();
       }, 1000);
+
+      setTimeout(() => {
+        setInterval(() => {
+          signal2.value = Math.random().toString();
+        }, 1000);
+      }, 500);
     </script>
   </body>
 </html>
