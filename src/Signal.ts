@@ -5,11 +5,11 @@ export type SignalOptions = {
   render: (value: unknown) => string;
 };
 
-const defaultOptions = {
+export const defaultOptions = {
   property: "innerHTML",
   bind: false,
   bindEvents: [],
-  render: (value: unknown) => JSON.stringify(value),
+  render: (value: any) => (value.hasOwnProperty("toString") ? value.toString() : JSON.stringify(value)) || "",
 };
 
 declare class Signal<T = any> {
@@ -147,7 +147,7 @@ Signal.prototype = {
     node[property] = this._value;
   },
 
-  copyTo(node: Node, opts: SignalOptions, keepInSync: boolean = false) {
+  copyTo(node: Node, opts: SignalOptions, keepInSync: boolean = true) {
     const signal = new Signal(node, this._value, opts);
     if (keepInSync) this.subscribe(value => (signal.value = value));
     return signal;

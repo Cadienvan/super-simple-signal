@@ -1,4 +1,4 @@
-import Signal, { SignalOptions } from "./Signal";
+import Signal, { defaultOptions, SignalOptions } from "./Signal";
 
 // Computed is a signal that is derived from other signals and is updated when any of its dependencies change.
 declare class Computed<T = any> extends Signal<T> {
@@ -19,12 +19,7 @@ function Computed(
   dependencies: Signal | Signal[],
   fn: (...args: any[]) => any,
   node: Node | undefined = undefined,
-  opts: SignalOptions = {
-    property: "innerHTML",
-    bind: false,
-    bindEvents: [],
-    render: (value: unknown) => JSON.stringify(value),
-  }
+  opts: SignalOptions = defaultOptions
 ) {
   dependencies = Array.isArray(dependencies) ? dependencies : [dependencies];
   if (!(this instanceof Computed)) {

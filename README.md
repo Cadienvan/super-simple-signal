@@ -62,7 +62,7 @@ Attaches the signal to the given node. The signal will update the node's given p
 Detaches the signal from the given node.
 
 ### `signal.copyTo(node, opts, keepInSync)`
-Copies the signal's value to the given node. This will actually create a new `Signal`. If `keepInSync` is `true`, the new signal will be updated whenever the initial signal changes. Defaults to `false`. To prevent circular updates, we only subscribe to the signal if keepInSync is true and don't subscribe back.
+Copies the signal's value to the given node. This will actually create a new `Signal`. If `keepInSync` is `true`, the new signal will be updated whenever the initial signal changes. Defaults to `true`. To prevent circular updates, we only subscribe to the signal if keepInSync is true and don't subscribe back.
 
 ## Computed
 A `Computed` is a `Signal` which is dependent on given input signals.  
