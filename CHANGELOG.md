@@ -1,3 +1,18 @@
+#### 0.2.1 (2023-03-06)
+
+##### Chores
+
+*  removed unnecessary detachFrom ([60d96ab3](https://github.com/Cadienvan/super-simple-signal/commit/60d96ab3bc483001ba0cff72e2bfe76f00b065b6))
+
+##### Documentation Changes
+
+*  updated docs ([96289228](https://github.com/Cadienvan/super-simple-signal/commit/9628922875762fc0327e4fbc706ff48075c83277))
+
+##### New Features
+
+*  added terser for minification ([b4f514dd](https://github.com/Cadienvan/super-simple-signal/commit/b4f514dd1de189878fb7cd88c89ad82a1a30a179))
+*  implemented detach ([a326dac0](https://github.com/Cadienvan/super-simple-signal/commit/a326dac0f49e21db9ebc499a19316bdf6e306ecf))
+
 ### 0.2.0 (2023-03-06)
 
 ### 0.1.0 (2023-03-06)
