@@ -168,6 +168,7 @@ Signal.prototype = {
   },
 
   set value(value: unknown) {
+    if (this._value === value) return;
     this._oldValue = this._value;
     this._value = value;
     this._version += 1;
