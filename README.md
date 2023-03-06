@@ -58,8 +58,8 @@ Unsubscribes the given callback from the signal.
 ### `signal.attachTo(node, property)`
 Attaches the signal to the given node. The signal will update the node's given property whenever the signal's value changes. Defaults to `innerHTML`. If the signal already has a node attached, it will be detached first.
 
-### `signal.detachFrom(node)`
-Detaches the signal from the given node.
+### `signal.detach()`
+Detaches the signal from the current node.
 
 ### `signal.copyTo(node, opts, keepInSync)`
 Copies the signal's value to the given node. This will actually create a new `Signal`. If `keepInSync` is `true`, the new signal will be updated whenever the initial signal changes. Defaults to `true`. To prevent circular updates, we only subscribe to the signal if keepInSync is true and don't subscribe back.

@@ -53,7 +53,6 @@ declare class Signal<T = any> {
 
   copyTo(node: Node, opts?: SignalOptions, keepInSync?: boolean): Signal<T>;
 
-  detachFrom(node: Node): void;
 
   detach(): void;
 
@@ -153,12 +152,6 @@ Signal.prototype = {
     const signal = new Signal(node, this._value, opts);
     if (keepInSync) this.subscribe(value => (signal.value = value));
     return signal;
-  },
-
-  detachFrom(node: Node) {
-    if (this._node === node) {
-      this._node = undefined;
-    }
   },
 
   detach() {
