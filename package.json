@@ -1,7 +1,7 @@
 {
   "name": "super-simple-signal",
   "version": "0.2.0",
-  "description": "A simple signal implementation in TypeScript for the browser and Node.",
+  "description": "A super simple signal implementation in TypeScript for the browser.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "start": "tsc -w",
-    "build": "rm -rf ./dist/* && tsc && rollup ./dist/tmp/index.js --file ./dist/index.js --format iife --name SuperSimpleSignal --sourcemap && rm -rf ./dist/tmp",
+    "build-dev": "rm -rf ./dist/* && tsc && rollup ./dist/tmp/index.js --file ./dist/index.js --format iife --name SuperSimpleSignal --sourcemap && rm -rf ./dist/tmp",
+    "build": "rm -rf ./dist/* && tsc && rollup ./dist/tmp/index.js --file ./dist/index.js --format iife --name SuperSimpleSignal --compact && rm -rf ./dist/tmp && terser --compress --mangle -o ./dist/index.js -- ./dist/index.js",
     "release:common": "npm run build && git push --follow-tags origin main && npm publish --access public",
     "release:patch": "changelog -p && git add CHANGELOG.md && git commit -m 'docs: updated changelog' && npm version patch && npm run release:common",
     "release:minor": "changelog -m && git add CHANGELOG.md && git commit -m 'docs: updated changelog' && npm version minor && npm run release:common",
@@ -39,6 +40,7 @@
   "devDependencies": {
     "generate-changelog": "^1.8.0",
     "rollup": "^3.18.0",
+    "terser": "^5.16.5",
     "typescript": "^4.9.5"
   }
 }
