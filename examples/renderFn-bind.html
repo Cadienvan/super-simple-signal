@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signals Demo</title>
+  </head>
+  <body>
+    <input type="text" id="s-computed" />
+    <div id="s-computed-result"></div>
+    <script src="../dist/index.js"></script>
+    <script>
+      const sig = new Signal(document.getElementById("s-computed"), "prova", {
+        property: "value",
+        bindEvents: ["input"],
+        bind: true,
+      });
+      const sigResult = sig.copyTo(
+        document.getElementById("s-computed-result"),
+        {
+          render: value => {
+            return value.toUpperCase().split("").reverse().join("");
+          },
+        },
+        true
+      );
+
+      sigResult.subscribe(value => {
+        console.log("sigResult", value);
+      });
+    </script>
+  </body>
+</html>

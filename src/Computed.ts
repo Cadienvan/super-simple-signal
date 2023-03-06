@@ -23,6 +23,7 @@ function Computed(
     property: "innerHTML",
     bind: false,
     bindEvents: [],
+    render: (value: unknown) => JSON.stringify(value),
   }
 ) {
   dependencies = Array.isArray(dependencies) ? dependencies : [dependencies];

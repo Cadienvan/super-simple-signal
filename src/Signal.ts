@@ -2,7 +2,15 @@ export type SignalOptions = {
   property: string;
   bind: boolean;
   bindEvents: string[];
-}
+  render: (value: unknown) => string;
+};
+
+const defaultOptions = {
+  property: "innerHTML",
+  bind: false,
+  bindEvents: [],
+  render: (value: unknown) => JSON.stringify(value),
+};
 
 declare class Signal<T = any> {
   /** @internal */
@@ -53,11 +61,8 @@ declare class Signal<T = any> {
   set value(value: T);
 }
 
-function Signal(this: Signal, node: Node | undefined = undefined, value: unknown = undefined, opts: SignalOptions = {
-  property: "innerHTML",
-  bind: false,
-  bindEvents: [],
-}) {
+function Signal(this: Signal, node: Node | undefined = undefined, value: unknown = undefined, opts: SignalOptions = defaultOptions) {
+  opts = { ...defaultOptions, ...opts };
   if (!(this instanceof Signal)) {
     return new Signal(node, value, opts);
   }
@@ -80,6 +85,13 @@ function Signal(this: Signal, node: Node | undefined = undefined, value: unknown
   } else if (node && !value) {
     this._value = node[opts.property];
   }
+
+  if (node && opts.bind) {
+    this._attachNodeEvents();
+  } else if (node && !opts.bind) {
+    this._refresh();
+  }
+  return this;
 }
 
 Signal.prototype = {
@@ -91,12 +103,13 @@ Signal.prototype = {
     property: "innerHTML",
     bind: false,
     bindEvents: [],
+    render: (value: unknown) => JSON.stringify(value),
   },
   _listeners: new Set(),
 
   _refresh() {
     if (this._node) {
-      this._node[this._opts.property] = this._value;
+      this._node[this._opts.property] = this._opts.render(this._value);
       return true;
     }
     return false;
@@ -112,9 +125,11 @@ Signal.prototype = {
   _attachNodeEvents() {
     this._node?.addEventListener("destroy", () => (this._node = undefined));
     this._node?.addEventListener("remove", () => (this._node = undefined));
-    this._node?.addEventListener("change", () => {
-      this._setRaw(this._node?.[this._opts.property]);
-    });
+    for (const event of this._opts.bindEvents) {
+      this._node?.addEventListener(event, () => {
+        this._setRaw(this._node?.[this._opts.property]);
+      });
+    }
   },
 
   subscribe(fn: (value: unknown) => void) {
