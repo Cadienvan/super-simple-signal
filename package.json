@@ -1,6 +1,6 @@
 {
   "name": "super-simple-signal",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A simple signal implementation in TypeScript for the browser and Node.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +10,10 @@
   "scripts": {
     "start": "tsc -w",
     "build": "rm -rf ./dist/* && tsc && rollup ./dist/tmp/index.js --file ./dist/index.js --format iife --name SuperSimpleSignal --sourcemap && rm -rf ./dist/tmp",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "release:common": "npm run build && git push --follow-tags origin main && npm publish --access public",
+    "release:patch": "changelog -p && git add CHANGELOG.md && git commit -m 'docs: updated changelog' && npm version patch && npm run release:common",
+    "release:minor": "changelog -m && git add CHANGELOG.md && git commit -m 'docs: updated changelog' && npm version minor && npm run release:common",
+    "release:major": "changelog -M && git add CHANGELOG.md && git commit -m 'docs: updated changelog' && npm version major && npm run release:common"
   },
   "keywords": [
     "signal",
@@ -28,8 +31,13 @@
     "event binding"
   ],
   "author": "Michael Di Prisco <cadienvan@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Cadienvan/super-simple-signal.git"
+  },
   "license": "ISC",
   "devDependencies": {
+    "changelog": "^1.4.2",
     "rollup": "^3.18.0",
     "typescript": "^4.9.5"
   }
