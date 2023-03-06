@@ -1,5 +1,5 @@
 # What Is This?
-This is a super simple signal library for browser and Node. It's mostly an experiment which provided good benchmarks and a nice, clean and simple API.
+This is a super simple signal library for browser. It's mostly an experiment which provided good benchmarks and a nice, clean and simple API. It's also very small, weighing in at 296B minified and gzipped.
 
 # Installation
 ```bash
