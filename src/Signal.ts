@@ -55,6 +55,8 @@ declare class Signal<T = any> {
 
   detachFrom(node: Node): void;
 
+  detach(): void;
+
   toString(): string;
 
   get value(): T;
@@ -157,6 +159,10 @@ Signal.prototype = {
     if (this._node === node) {
       this._node = undefined;
     }
+  },
+
+  detach() {
+    this._node = undefined;
   },
 
   toString() {
