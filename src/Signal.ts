@@ -149,7 +149,6 @@ Signal.prototype = {
 
   copyTo(node: Node, opts: SignalOptions, keepInSync: boolean = false) {
     const signal = new Signal(node, this._value, opts);
-    // To prevent circular updates, we only subscribe to the signal if keepInSync is true and don't subscribe back.
     if (keepInSync) this.subscribe(value => (signal.value = value));
     return signal;
   },
