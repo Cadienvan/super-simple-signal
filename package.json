@@ -35,9 +35,9 @@
     "type": "git",
     "url": "git://github.com/Cadienvan/super-simple-signal.git"
   },
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
-    "changelog": "^1.4.2",
+    "generate-changelog": "^1.8.0",
     "rollup": "^3.18.0",
     "typescript": "^4.9.5"
   }
