@@ -7,22 +7,13 @@
     <title>Signals Demo</title>
   </head>
   <body>
-    <div id="s1"></div>
     <input type="text" id="s1-input" />
     <script src="../dist/index.js"></script>
     <script>
-      const s1 = document.getElementById("s1");
-      const s2 = document.getElementById("s1-input");
-
-      const signal1 = new Signal(s1);
-      const signal2 = new Signal(s2, undefined, {
+      const signal2 = new Signal(document.getElementById("s1-input"), "prova", {
         property: "value",
         bindEvents: ["input"],
         bind: true,
-      });
-
-      signal1.subscribe(value => {
-        console.log("signal1", value);
       });
 
       signal2.subscribe(value => {
