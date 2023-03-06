@@ -1,6 +1,6 @@
 {
   "name": "super-simple-signal",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A simple signal implementation in TypeScript for the browser and Node.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
