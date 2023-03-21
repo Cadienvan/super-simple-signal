@@ -33,6 +33,9 @@ declare class Signal<T = any> {
   _opts: SignalOptions;
 
   /** @internal */
+  _queuedForRerender: Boolean;
+
+  /** @internal */
   _listeners: Set<(...args: unknown[]) => void>;
 
   constructor(node?: Node | undefined, value?: T, opts?: SignalOptions);
@@ -54,7 +57,6 @@ declare class Signal<T = any> {
   attachTo(node: Node, property?: string): void;
 
   copyTo(node: Node, opts?: SignalOptions, keepInSync?: boolean): Signal<T>;
-
 
   detach(): void;
 
@@ -81,6 +83,7 @@ function Signal(this: Signal, node: Node | undefined = undefined, value: unknown
   this._version = 0;
   this._node = node;
   this._opts = opts;
+  this._queuedForRerender = false;
   this._listeners = new Set();
 
   if (node && value) {
@@ -103,6 +106,7 @@ Signal.prototype = {
   _version: 0,
   _node: undefined,
   _opts: defaultOptions,
+  _queuedForRerender: false,
   _listeners: new Set(),
 
   _refresh() {
@@ -169,7 +173,13 @@ Signal.prototype = {
     this._value = value;
     this._version += 1;
     this._listeners.forEach(fn => fn(value, this._oldValue));
-    this._refresh();
+    if (!this._queuedForRerender) {
+      this._queuedForRerender = true;
+      window.queueMicrotask(() => {
+        this._queuedForRerender = false;
+        this._refresh();
+      });
+    }
   },
 };
 

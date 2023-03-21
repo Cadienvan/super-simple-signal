@@ -77,5 +77,10 @@ It takes the following parameters:
 - `node`: The node to attach the Computed to.
 - `opts`: A Signal-compatible opts parameter.
 
+# Benchmarks
+
+If you open the `examples/bechmark.html` file in your browser, you can see the time needed to update 3 signals 100.000 times with random numbers. The results are as follows on a 2021 Macbook Pro M1 Max with 32GB of RAM:  
+`12ms for 300.000 updates`
+
 # ToDo
 - [ ] Add tests
