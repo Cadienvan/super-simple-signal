@@ -1,3 +1,9 @@
+### 0.4.0 (2023-03-21)
+
+##### New Features
+
+*  implementing queueMicrotask for single re-render ([e22a0023](https://github.com/Cadienvan/super-simple-signal/commit/e22a0023c8e39d4c32fbaaf87992b66fad395b3f))
+
 ### 0.3.0 (2023-03-21)
 
 ##### New Features
