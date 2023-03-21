@@ -45,6 +45,7 @@ Creates a new signal which is attached to the given node and has the given initi
 - `bind` - Whether to bind the signal to the node. Defaults to `true`. If so, the signal will be updated whenever the node's `bindEvents` are fired.
 - `bindEvents` - The events to bind to. Defaults to an empty array.
 - `render` - A function which will be called whenever the signal's value changes. The function will be called with the new value as the first argument. This means you can have a signal value of any type and render it however you want.
+- `allowDirty` - Whether to allow dirty values. Defaults to `false`. If so, the signal will fire its subscribers and re-render even if the value hasn't changed.
 
 ### `signal.value`
 The current value of the signal. Setting this will update the signal's value and call all the signal's subscribers and re-render the signal's node.

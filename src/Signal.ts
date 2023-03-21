@@ -3,6 +3,7 @@ export type SignalOptions = {
   bind: boolean;
   bindEvents: string[];
   render: (value: unknown) => string;
+  allowDirty?: boolean;
 };
 
 export const defaultOptions = {
@@ -10,6 +11,7 @@ export const defaultOptions = {
   bind: false,
   bindEvents: [],
   render: (value: any) => (value.hasOwnProperty("toString") ? value.toString() : JSON.stringify(value)) || "",
+  allowDirty: false,
 };
 
 declare class Signal<T = any> {
@@ -100,12 +102,7 @@ Signal.prototype = {
   _oldValue: undefined,
   _version: 0,
   _node: undefined,
-  _opts: {
-    property: "innerHTML",
-    bind: false,
-    bindEvents: [],
-    render: (value: unknown) => JSON.stringify(value),
-  },
+  _opts: defaultOptions,
   _listeners: new Set(),
 
   _refresh() {
@@ -167,7 +164,7 @@ Signal.prototype = {
   },
 
   set value(value: unknown) {
-    if (this._value === value) return;
+    if (this._value === value && !this._opts.allowDirty) return;
     this._oldValue = this._value;
     this._value = value;
     this._version += 1;
