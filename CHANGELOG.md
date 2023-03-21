@@ -1,3 +1,9 @@
+### 0.3.0 (2023-03-21)
+
+##### New Features
+
+*  added allowDirty as option ([f73c083f](https://github.com/Cadienvan/super-simple-signal/commit/f73c083fdfff62737f67fef5bd6e19d464252e19))
+
 #### 0.2.1 (2023-03-06)
 
 ##### Chores
