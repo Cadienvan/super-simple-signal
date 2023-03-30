@@ -72,7 +72,7 @@ function Signal(this: Signal, node: Node | undefined = undefined, value: unknown
     return new Signal(node, value, opts);
   }
 
-  if (typeof node !== "object") {
+  if (!(node instanceof Node)) {
     // We can assume that the first argument is the value
     value = node;
     node = undefined;
