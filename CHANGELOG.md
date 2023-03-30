@@ -1,5 +1,15 @@
 #### 0.4.1 (2023-03-30)
 
+##### Documentation Changes
+
+*  updated changelog ([1dd06c21](https://github.com/Cadienvan/super-simple-signal/commit/1dd06c2119320582ae9626063ab20eba88cdfc74))
+
+##### New Features
+
+*  objects can now be used as a signal value ([b2e41591](https://github.com/Cadienvan/super-simple-signal/commit/b2e4159119d399dd6d027980c435ea292570574b))
+
+#### 0.4.1 (2023-03-30)
+
 ##### New Features
 
 *  objects can now be used as a signal value ([b2e41591](https://github.com/Cadienvan/super-simple-signal/commit/b2e4159119d399dd6d027980c435ea292570574b))
