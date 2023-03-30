@@ -2,6 +2,18 @@
 
 ##### Documentation Changes
 
+*  updated documentation ([ae627142](https://github.com/Cadienvan/super-simple-signal/commit/ae627142322407b3de1e96e1c8040e04b6413ee0))
+*  updated changelog ([c518756d](https://github.com/Cadienvan/super-simple-signal/commit/c518756d7a2ebb997ff43e719b7286eb10571a76))
+*  updated changelog ([1dd06c21](https://github.com/Cadienvan/super-simple-signal/commit/1dd06c2119320582ae9626063ab20eba88cdfc74))
+
+##### New Features
+
+*  objects can now be used as a signal value ([b2e41591](https://github.com/Cadienvan/super-simple-signal/commit/b2e4159119d399dd6d027980c435ea292570574b))
+
+#### 0.4.1 (2023-03-30)
+
+##### Documentation Changes
+
 *  updated changelog ([1dd06c21](https://github.com/Cadienvan/super-simple-signal/commit/1dd06c2119320582ae9626063ab20eba88cdfc74))
 
 ##### New Features
