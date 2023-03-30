@@ -7,22 +7,28 @@ npm install super-simple-signal
 ```
 
 # Usage
+
+## Basic
 ```html
 <!-- Load the library from your node_modules or from a CDN -->
 <script src="./node_modules/super-simple-signal/index.js"></script>
 <script>
+  // Create a new signal with the initial value of 0
   const signal = new Signal(0);
 
+  // Subscribe to the signal
   signal.subscribe(value => {
     console.log(value);
   });
 
+  // Attach the signal to a DOM node
   window.addEventListener("load", () => {
     const s1 = document.getElementById("s1");
     signal.attachTo(s1);
   });
 </script>
 <div id="s1"></div>
+<!-- Update signal value on button click -->
 <button onclick="signal.value++">Click me</button>
 ```
 
